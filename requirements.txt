@@ -1,0 +1,3 @@
+###### Requirements fo extractorNG ######
+patool
+pyunpack
