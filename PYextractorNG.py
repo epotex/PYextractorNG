@@ -1,13 +1,15 @@
 import os
-try:
+try: # checking if the module installed
     from pyunpack import Archive as extractor
-except ImportError:
+except ImportError: #if module extption raised  exit
     print "Critical module not found, Please run pip install -r requirements.txt first!"
+    exit()
 import logging
+from pytvdbapi import api
 log_file = "PYextractorNG.log"
 logging.basicConfig(filename=log_file,level=logging.DEBUG, format='%(asctime)s %(message)s')
 ###Variables ####
-root = "/" # Config the root folder to start the scan from, Example:  "C:\" or "/tmp/
+root = "/tmp" # Config the root folder to start the scan from, Example:  "C:\" or "/tmp/
 rar_ext = "rar" # RAR extention
 zip_ext = "zip" # zip extention
 archive_list = []
@@ -35,6 +37,14 @@ def extractor(list):
     for file in list:
         logging.info("Extracting %s" % (file))
         extractor(file).extractall(extract_path)
-    logging.info("FINISHED Extracting files)
+    logging.info("FINISHED Extracting files")
 
-spider(root)
+#spider(root)
+
+def tvdb_search(tvshow):
+    db = api.TVDB('B43FF87DE395DF56')
+    result = db.search(tvshow, 'en')
+    if len(result) == 1:
+        return True
+    else:
+        return False
