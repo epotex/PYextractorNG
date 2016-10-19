@@ -13,8 +13,7 @@ log_file = "PYextractorNG.log"
 logging.basicConfig(filename=log_file,level=logging.DEBUG, format='%(asctime)s %(message)s')
 ###Variables ####
 root_folder = "/Users/moshe_edri/Google Drive/tmp" # Config the root folder to start the scan from, Example:  "C:\" or "/tmp/
-rar_ext = "rar" # RAR extention
-zip_ext = "zip" # zip extention
+extentions = ['rar','zip'] # the extentions to look for, you can add more (7z, tar,gz, etc)
 archive_dict = {}
 general_extract_path = "/general/"# Config the path to a general folder for extraction , Example:  "C:\" or "/tmp/
 movie_extract_path = "/movie/"# Config the path to the movies folder, Example:  "C:\" or "/tmp/
@@ -24,13 +23,10 @@ def spider(folder):
     for folderName, subfolders, filenames in os.walk(folder):
         #print('The current folder is ' + folderName)
         for filename in filenames:
-            if filename.split('.')[-1] == rar_ext:
-                logging.info("Found rar file in: %s,Trying to categorise it... " % (folderName + filename))
+            file_ext = filename.split('.')[-1]
+            if file_ext in extentions:
+                logging.info("Found %s file: %s, Trying to categorise it... " % (file_ext.upper(), folderName + filename))
                 categorise(filename)
-            if filename.split('.')[-1] == zip_ext:
-                logging.info("Found zip file in: %s, Trying to categorise it... " % (folderName+filename))
-                categorise(filename)
-                #print('FILE INSIDE ' + folderName + ': '+ filename)
     if archive_dict.keys():
         logging.info("FINISHED, Found %s files to extract:"% (len(archive_dict)))
         for k, v in archive_dict.iteritems():
