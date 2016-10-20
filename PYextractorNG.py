@@ -1,12 +1,13 @@
 import os
 try: # checking if the module installed
     from pyunpack import Archive as extractor
+    from pytvdbapi import api
+    import tmdbsimple as tmdb
 except ImportError: #if module extption raised  exit
     print "Critical module not found, Please run pip install -r requirements.txt first!"
     exit()
 import logging
-from pytvdbapi import api
-import tmdbsimple as tmdb
+
 
 ###Variables ####
 moviedb_api_key = "7fd4c0a5340d510450ca53c37925e5ba"
@@ -32,8 +33,8 @@ def spider(folder):
         for filename in filenames:
             file_ext = filename.split('.')[-1]
             if file_ext in extentions:
-                logging.info("Found %s file: %s, Trying to categorise it... " % (file_ext.upper(), folderName + filename))
-                categorise(filename)
+                logging.info("Found %s file: %s, Trying to categorized it... " % (file_ext.upper(), folderName + filename))
+                categorized(filename)
     if archive_dict.keys():
         logging.info("FINISHED, Found %s files to extract:"% (len(archive_dict)))
         for k, v in archive_dict.iteritems():
@@ -63,7 +64,7 @@ def themoviedb_check(movie):
     else:
         return False
 
-def categorise(filename):
+def categorized(filename):
     logging.info("Checking TVDB if %s is a TV show... " % (filename))
     check = filename.split(".")[0]
     check = check.replace("_", " ")
@@ -76,7 +77,7 @@ def categorise(filename):
         logging.info("%s IS a Movie , and will be extracted to the Movie folder, adding it to the queue. " % (filename))
     else:
         archive_dict[filename] = general_extract_path
-        logging.info("Couldn't categorise %s, the archive will be extracted to the general extract folder, adding it to the queue.  " % (filename))
+        logging.info("Couldn't categorized %s, the archive will be extracted to the general extract folder, adding it to the queue.  " % (filename))
 
 spider(root_folder)
 
