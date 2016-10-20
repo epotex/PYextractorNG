@@ -8,7 +8,6 @@ except ImportError: #if module extption raised  exit
     exit()
 import logging
 
-
 ###Variables ####
 moviedb_api_key = "7fd4c0a5340d510450ca53c37925e5ba"
 tvdb_api_key = "B43FF87DE395DF56"
@@ -16,15 +15,10 @@ log_file = "PYextractorNG.log"
 logging.basicConfig(filename=log_file,level=logging.DEBUG, format='%(asctime)s %(message)s')
 root_folder = "/Users/moshe_edri/Google Drive/tmp" # Config the root folder to start the scan from, Example:  "C:\" or "/tmp/
 extentions = ['rar','zip'] # the extentions to look for, you can add more (7z, tar,gz, etc)
-archive_dict = {}
 general_extract_path = "/general/"# Config the path to a general folder for extraction , Example:  "C:\" or "/tmp/
 movie_extract_path = "/movie/"# Config the path to the movies folder, Example:  "C:\" or "/tmp/
 tv_show_extract_path = "/tv_shows" #Config the path to the tv shows folder, Example:  "C:\" or "/tmp/
-
-
-
-
-
+archive_dict = {}
 
 def spider(folder):
     logging.info("Starting the scan in %s " % (folder))
@@ -46,7 +40,6 @@ def spider(folder):
 def extractor(file, extract_path):
     logging.info("Extracting %s to %s" % (file, extract_path))
     #extractor("test.zip").extractall("/")
-
 
 def tvdb_search(tvshow):
     db = api.TVDB(tvdb_api_key)
@@ -80,7 +73,3 @@ def categorized(filename):
         logging.info("Couldn't categorized %s, the archive will be extracted to the general extract folder, adding it to the queue.  " % (filename))
 
 spider(root_folder)
-
-
-
-
