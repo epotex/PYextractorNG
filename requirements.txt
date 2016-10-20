@@ -1,3 +1,5 @@
 ###### Requirements fo extractorNG ######
 patool
 pyunpack
+pytvdbapi
+tmdbsimple
